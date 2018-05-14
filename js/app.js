@@ -3,14 +3,24 @@ const allEnemies = [];
 
 
 const Player = function() {
+    this.sprite = 'images/char-boy.png';
+    this.x = 200;
+    this.y = 390;
+
     this.update = function() {
         return true;
+    }
+
+    this.render = function() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     
 };
 
 const player = new Player();
+
+
 
 const Enemy = function() {
     // Variables applied to each of our instances go here,
