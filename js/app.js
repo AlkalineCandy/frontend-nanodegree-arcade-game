@@ -1,11 +1,26 @@
 // Enemies our player must avoid
-var Enemy = function() {
+const allEnemies = [];
+
+
+const Player = function() {
+    this.update = function() {
+        return true;
+    }
+
+    
+};
+
+const player = new Player();
+
+const Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+
+
 };
 
 // Update the enemy's position, required method for game
@@ -44,3 +59,5 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+
