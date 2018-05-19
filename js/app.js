@@ -1,5 +1,6 @@
 // Enemies our player must avoid
-const allEnemies = [];
+let allEnemies = [];
+let enemyNumber = 10;
 
 
 const Player = function() {
@@ -45,6 +46,15 @@ const Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = Math.random() * 200;
+    this.y = Math.random() * 200;
+
+   
+
+    this.render = function() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
 
 
 };
@@ -55,6 +65,9 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+
+    this.x += 1 * dt; 
+    this.y += 2 * dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -76,7 +89,7 @@ Enemy.prototype.render = function() {
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
@@ -87,3 +100,6 @@ document.addEventListener('keyup', function(e) {
 });
 
 
+for (let i = 0; i < enemyNumber; i++) {
+    allEnemies.push(new Enemy());
+}
