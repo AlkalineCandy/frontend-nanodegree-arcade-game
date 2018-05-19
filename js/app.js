@@ -15,7 +15,23 @@ const Player = function() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    
+    this.handleInput = function(direction) {
+        switch (direction) {
+            case 'up':
+            this.y = this.y - 85;  
+            break;
+            case 'down':
+            this.y = this.y + 85;
+            break;
+            case 'left': 
+            this.x = this.x - 100;
+            break;
+            case 'right': 
+            this.x = this.x + 100;
+            break;
+            default: return;          
+        }
+    }
 };
 
 const player = new Player();
