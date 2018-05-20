@@ -1,6 +1,6 @@
 // Enemies our player must avoid
 let allEnemies = [];
-let enemyNumber = 10;
+let enemyNumber = 3;
 
 
 const Player = function() {
@@ -40,17 +40,17 @@ const player = new Player();
 
 
 const Enemy = function() {
+    let enemyRows = [55, 142, 222]; // coordinates of the rows in which the bugs will move
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
-    this.x = Math.random() * 200;
-    this.y = Math.random() * 200;
+    this.x = Math.random() - 95;
+    this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; 
 
    
-
     this.render = function() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -66,8 +66,8 @@ Enemy.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
 
-    this.x += 1 * dt; 
-    this.y += 2 * dt;
+   this.x += Math.random() * 200 * dt; 
+
 };
 
 // Draw the enemy on the screen, required method for game
