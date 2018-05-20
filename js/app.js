@@ -1,6 +1,6 @@
 // Enemies our player must avoid
 let allEnemies = [];
-let enemyNumber = 3;
+let enemyNumber = 6;
 
 
 const Player = function() {
@@ -50,7 +50,8 @@ const Enemy = function() {
     this.x = Math.random() - 95;
     this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; 
 
-   
+    this.speed = 10 + Math.floor( Math.random() * 350 );
+
     this.render = function() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -71,7 +72,7 @@ Enemy.prototype.update = function(dt) {
     }
 
     else {
-   this.x += Math.random() * 200 * dt;
+        this.x += this.speed * dt;
     }
 
 };
