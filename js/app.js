@@ -9,7 +9,7 @@ const Player = function() {
     this.y = 390;
 
     this.update = function() {
-        return true;
+        this.render();
     }
 
     this.render = function() {
@@ -19,21 +19,21 @@ const Player = function() {
     this.handleInput = function(direction) {
         switch (direction) {
             case 'up':
-            this.y = this.y - 85;  
+            this.y = this.y > 0 ? this.y -= 85 : this.y -= 0;  
             break;
             case 'down':
-            this.y = this.y + 85;
+            this.y = this.y < 389 ? this.y += 85 : this.y += 0;
             break;
             case 'left': 
-            this.x = this.x - 100;
+            this.x = this.x > 0 ? this.x -= 100 : this.x += 0;
             break;
             case 'right': 
-            this.x = this.x + 100;
+            this.x = this.x < 400 ? this.x += 100 : this.x += 0;
             break;
             default: return;          
         }
     }
-};
+}
 
 const player = new Player();
 
@@ -96,13 +96,13 @@ Enemy.prototype.render = function() {
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
+    e.preventDefault();
     const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
     };
-
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
