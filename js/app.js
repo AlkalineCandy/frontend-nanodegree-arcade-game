@@ -9,7 +9,16 @@ const Player = function() {
     this.y = 390;
 
     this.update = function() {
-        this.render();
+        let self = this;
+        let checkEnemies = function(enemyObject) {
+            return self.x === enemyObject.x || self.y === enemyObject.y;
+        }
+        
+        if (allEnemies.some(checkEnemies)) {
+            this.x = 200;
+            this.y = 390;
+            
+        }
     }
 
     this.render = function() {
@@ -40,15 +49,18 @@ const player = new Player();
 
 
 const Enemy = function() {
-    let enemyRows = [55, 142, 222]; // coordinates of the rows in which the bugs will move
+   
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+
+    let enemyRows = [55, 142, 222]; // coordinates of the rows in which the bugs will move
+
     this.sprite = 'images/enemy-bug.png';
-    this.x = Math.random() - 95;
-    this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; 
+    this.x = Math.random() - 95; // bugs start off-screen with their nose on-screen
+    this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; // bugs randomly appear in one of the rows 
 
     this.speed = 10 + Math.floor( Math.random() * 350 );
 
@@ -96,7 +108,7 @@ Enemy.prototype.render = function() {
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    e.preventDefault();
+    e.preventDefault(); // prevents scrolling
     const allowedKeys = {
         37: 'left',
         38: 'up',
@@ -107,6 +119,6 @@ document.addEventListener('keyup', function(e) {
 });
 
 
-for (let i = 0; i < enemyNumber; i++) {
+for (let i = 0; i < enemyNumber; i++) { // a loop for the easy handling of enemyNumber's 
     allEnemies.push(new Enemy());
 }
