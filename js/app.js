@@ -7,17 +7,13 @@ const Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 390;
+    this.width = 101;
+    this.height = 171;
 
     this.update = function() {
-        let self = this;
-        let checkEnemies = function(enemyObject) {
-            return self.x === enemyObject.x || self.y === enemyObject.y;
-        }
-        
-        if (allEnemies.some(checkEnemies)) {
+        if (this.checkForCollision(allEnemies)) {
             this.x = 200;
             this.y = 390;
-            
         }
     }
 
@@ -44,6 +40,20 @@ const Player = function() {
     }
 }
 
+Player.prototype.checkForCollision = function(enemies) {
+    // Logic to check collisions goes hurr
+    for (let enemy of enemies) {
+        if (Player.x < enemy.x + enemy.width &&
+        Player.x + Player.width > enemy.x &&
+        Player.y < enemy.y + enemy.height &&
+        Player.height + Player.y > enemy.y) { 
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 const player = new Player();
 
 
@@ -60,7 +70,9 @@ const Enemy = function() {
 
     this.sprite = 'images/enemy-bug.png';
     this.x = Math.random() - 95; // bugs start off-screen with their nose on-screen
-    this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; // bugs randomly appear in one of the rows 
+    this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; // bugs randomly appear in one of the rows
+    this.width = 101;
+    this.height = 171; 
 
     this.speed = 10 + Math.floor( Math.random() * 350 );
 
