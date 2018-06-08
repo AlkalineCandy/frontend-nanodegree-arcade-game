@@ -9,6 +9,7 @@ const Player = function() {
     this.y = 390;
     this.width = 101;
     this.height = 171;
+    this.score = 0;
 
     this.update = function() {
         if (this.checkForCollision(allEnemies)) {
@@ -40,17 +41,25 @@ const Player = function() {
     }
 }
 
-Player.prototype.checkForCollision = function(enemies) {
-    // Logic to check collisions goes hurr
-    for (let enemy of enemies) {
-        if (Player.x < enemy.x + enemy.width &&
-        Player.x + Player.width > enemy.x &&
-        Player.y < enemy.y + enemy.height &&
-        Player.height + Player.y > enemy.y) { 
-            return true;
-        } else {
-            return false;
-        }
+Player.prototype.checkForCollision = function(enemyArray){
+    let collisionDetected = false;
+    for (i = 0; i < enemyArray.length; i++){
+        if (this.x + 25 < enemyArray[i].x + enemyArray[i].width - 10 &&
+           this.x + this.width - 10 > enemyArray[i].x &&
+           this.y < enemyArray[i].y + enemyArray[i].height - 100 &&
+           this.y + this.height - 100 > enemyArray[i].y)
+            collisionDetected = true;
+    }
+    return collisionDetected;
+}
+
+Player.prototype.update = function() {
+    if (this.checkForCollision(allEnemies)){
+        this.x = 200;
+        this.y = 390;
+    }
+    if (this.y < 500) {
+       
     }
 }
 
