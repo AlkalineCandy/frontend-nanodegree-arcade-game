@@ -1,91 +1,85 @@
 // Enemies our player must avoid
-let allEnemies = [];
-let enemyNumber = 6;
+let allEnemies = []; //must be empty
+let enemyNumber = 6; //can be easily changed for more enemies
 
 
-const Player = function() {
+const Player = function () { // features of the player
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 390;
     this.width = 101;
     this.height = 171;
-    this.score = 0;
 
-    this.update = function() {
-        if (this.checkForCollision(allEnemies)) {
-            this.x = 200;
-            this.y = 390;
-        }
-    }
-
-    this.render = function() {
+    this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
-    this.handleInput = function(direction) {
+    this.handleInput = function (direction) { // implements what the arrow keys do, adds win scenario
         switch (direction) {
             case 'up':
-            this.y = this.y > 0 ? this.y -= 85 : this.y -= 0;  
-            break;
+                this.y = this.y > 0 ? this.y -= 85 : this.y -= 0;
+                break;
             case 'down':
-            this.y = this.y < 389 ? this.y += 85 : this.y += 0;
-            break;
-            case 'left': 
-            this.x = this.x > 0 ? this.x -= 100 : this.x += 0;
-            break;
-            case 'right': 
-            this.x = this.x < 400 ? this.x += 100 : this.x += 0;
-            break;
-            default: return;          
+                this.y = this.y < 389 ? this.y += 85 : this.y += 0;
+                break;
+            case 'left':
+                this.x = this.x > 0 ? this.x -= 100 : this.x += 0;
+                break;
+            case 'right':
+                this.x = this.x < 400 ? this.x += 100 : this.x += 0;
+                break;
+            default:
+                return;
+        }
+
+        if (this.y < 0) {
+            alert("Congratulations! Use F5 to start again. :D");
         }
     }
 }
 
-Player.prototype.checkForCollision = function(enemyArray){
+Player.prototype.checkForCollision = function (enemyArray) { //collision detecter function, creates an array
     let collisionDetected = false;
-    for (i = 0; i < enemyArray.length; i++){
+    for (i = 0; i < enemyArray.length; i++) {
         if (this.x + 25 < enemyArray[i].x + enemyArray[i].width - 10 &&
-           this.x + this.width - 10 > enemyArray[i].x &&
-           this.y < enemyArray[i].y + enemyArray[i].height - 100 &&
-           this.y + this.height - 100 > enemyArray[i].y)
+            this.x + this.width - 10 > enemyArray[i].x &&
+            this.y < enemyArray[i].y + enemyArray[i].height - 100 &&
+            this.y + this.height - 100 > enemyArray[i].y)
             collisionDetected = true;
     }
     return collisionDetected;
 }
 
-Player.prototype.update = function() {
-    if (this.checkForCollision(allEnemies)){
+Player.prototype.update = function () { // resets the game
+    if (this.checkForCollision(allEnemies)) {
         this.x = 200;
         this.y = 390;
     }
-    if (this.y < 500) {
-       
-    }
 }
 
-const player = new Player();
+const player = new Player(); // initiates the game
 
 
 
-const Enemy = function() {
-   
+const Enemy = function () {
+
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
 
-    let enemyRows = [55, 142, 222]; // coordinates of the rows in which the bugs will move
+    let enemyRows = [55, 142, 222]; // the y coordinates of he 3 rows in which the bugs will move
 
     this.sprite = 'images/enemy-bug.png';
     this.x = Math.random() - 95; // bugs start off-screen with their nose on-screen
     this.y = enemyRows[Math.floor(Math.random() * enemyRows.length)]; // bugs randomly appear in one of the rows
-    this.width = 101;
-    this.height = 171; 
+    this.width = 101; // dimensions of the bugs 
+    this.height = 171;
 
-    this.speed = 10 + Math.floor( Math.random() * 350 );
+    this.speed = 10 + Math.floor(Math.random() * 350); // speed randomly elected
 
-    this.render = function() {
+    this.render = function () {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
@@ -95,23 +89,21 @@ const Enemy = function() {
 
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
+Enemy.prototype.update = function (dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
 
     if (this.x > 500) {
-        this.x =  Math.random() - 95;
-    }
-
-    else {
+        this.x = Math.random() - 95;
+    } else {
         this.x += this.speed * dt;
     }
 
 };
 
 // Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
+Enemy.prototype.render = function () {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
@@ -128,7 +120,7 @@ Enemy.prototype.render = function() {
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
-document.addEventListener('keyup', function(e) {
+document.addEventListener('keyup', function (e) {
     e.preventDefault(); // prevents scrolling
     const allowedKeys = {
         37: 'left',
