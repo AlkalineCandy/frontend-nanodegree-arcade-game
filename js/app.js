@@ -1,3 +1,5 @@
+"use strict";
+
 // Enemies our player must avoid
 let allEnemies = []; //must be empty
 let enemyNumber = 6; //can be easily changed for more enemies
@@ -33,7 +35,7 @@ const Player = function () { // features of the player
         }
 
         if (this.y < 0) {
-            alert("Congratulations! Use F5 to start again. :D");
+           alert("Congratulations! You won, now try again! :D");
         }
     }
 }
@@ -50,8 +52,9 @@ Player.prototype.checkForCollision = function (enemyArray) { //collision detecte
     return collisionDetected;
 }
 
+
 Player.prototype.update = function () { // resets the game
-    if (this.checkForCollision(allEnemies)) {
+    if (this.checkForCollision(allEnemies) || this.y < 0) {
         this.x = 200;
         this.y = 390;
     }
