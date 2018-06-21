@@ -1,4 +1,3 @@
-"use strict";
 
 // Enemies our player must avoid
 let allEnemies = []; //must be empty
